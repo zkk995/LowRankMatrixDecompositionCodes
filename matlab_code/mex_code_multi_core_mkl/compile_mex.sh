@@ -1,8 +1,8 @@
 #!/bin/bash
 RSVD_INCLUDE="../../multi_core_mkl_code/"
-MATLAB_INC="/opt/shared/Matlab/R2015a/extern/include/"
-MATLAB_LIB="/opt/shared/Matlab/R2015a/bin/glnxa64/"
-MKL_LIB="/opt/shared/intel/2013_sp1/mkl/lib/intel64/" 
+MATLAB_INC="/opt/MATLAB/R2015b/extern/include/"
+MATLAB_LIB="/opt/MATLAB/R2015b/bin/glnxa64/"
+MKL_LIB="/opt/intel/mkl/lib/intel64/" 
 
 icc -mkl -fpic -shared -I "$MATLAB_INC" start_mkl_mex.c -L"$MATLAB_LIB" -L"$MKL_LIB" -lmkl_rt -lmex -lmx -o start_mkl_mex.mexa64
 
