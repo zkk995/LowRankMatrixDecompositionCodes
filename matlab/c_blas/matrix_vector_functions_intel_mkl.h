@@ -10,6 +10,8 @@
 #ifdef I
 #undef I
 #endif 
+#include <string.h> 
+#include <math.h> 
 /* call lapack anf blas provided by matlab @zkk995@gmail.com */
 #include <stdint.h>
 #include <inttypes.h>

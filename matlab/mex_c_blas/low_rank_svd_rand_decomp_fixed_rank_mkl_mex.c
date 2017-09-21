@@ -17,7 +17,7 @@
 /* mex function to compute rsvd given matrix A and rank k, return matrices U, S, V */
 void mexFunction( int nlhs, mxArray *plhs[],
              int nrhs, const mxArray *prhs[] ){
-    int i, j, m, n, k, p, vnum, q, s, frank, info, verbose = 0;
+    size_t i, j, m, n, k, p, vnum, q, s, frank, info, verbose = 1;
     time_t start_time, end_time;
     double  *ptr;
     double normM,normU,normS,normV,normP,percent_error;
