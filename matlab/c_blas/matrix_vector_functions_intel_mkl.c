@@ -463,7 +463,7 @@ double gaussrand()
 {
     static double V1, V2, S;
     static int phase = 0;
-    double X, eps=0.01;
+    double X, eps=0.0001;
 
     if(phase == 0) {
         do {
@@ -475,9 +475,9 @@ double gaussrand()
             S = V1 * V1 + V2 * V2;
             } while(S >= 1.0-eps || S < eps );
 
-        X = V1 * sqrt(-2 * log(S) / S);
+        X = V1 * sqrt(fabs(-2 * log(S)) / S);
     } else
-        X = V2 * sqrt(-2 * log(S) / S);
+        X = V2 * sqrt(fabs(-2 * log(S)) / S);
 
     phase = 1 - phase;
 
