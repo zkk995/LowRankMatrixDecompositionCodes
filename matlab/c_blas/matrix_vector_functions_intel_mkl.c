@@ -561,11 +561,15 @@ void initialize_identity_matrix(mat *D){
 /* invert diagonal matrix */
 void invert_diagonal_matrix(mat *Dinv, mat *D){
     int64_t i;
+    double v;
     #pragma omp parallel shared(D,Dinv) private(i)
     {
     #pragma omp parallel for
     for(i=0; i<(D->nrows); i++){
-        matrix_set_element(Dinv,i,i,1.0/(matrix_get_element(D,i,i)));
+        v = matrix_get_element(D,i,i);
+        if (fabs(v)<=1e-14){v = 0.0;}
+        else {v = 1.0/v;} 
+        matrix_set_element(Dinv,i,i, v);
     }
     }
 }
