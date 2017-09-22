@@ -10,6 +10,7 @@ mat * matrix_new(int64_t nrows, int64_t ncols)
     //M->d = (double*)mkl_calloc(nrows*ncols, sizeof(double), 64);
     //M->d = (double*)calloc(nrows*ncols, sizeof(double));
     M->d = (double*)malloc(nrows*ncols*sizeof(double));
+    memset(M->d, 0, nrows*ncols*sizeof(double));
     M->nrows = nrows;
     M->ncols = ncols;
     return M;

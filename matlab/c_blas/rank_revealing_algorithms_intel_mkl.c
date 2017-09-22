@@ -4,9 +4,6 @@
 #include "rank_revealing_algorithms_intel_mkl.h"
 # define CblasColMajor 102
 
-void mattrix_fill_zero(mat * M){
-    memset(M->d,0,sizeof(double)*M->nrows* M->ncols );
-} 
 
 /* computes the low rank SVD of rank k or tolerance TOL of matrix M  */
 void low_rank_svd_decomp_fixed_rank_or_prec(mat *M, int64_t k, double TOL, int64_t *frank, mat **U, mat **S, mat **V){
@@ -75,6 +72,7 @@ void low_rank_svd_decomp_fixed_rank_or_prec(mat *M, int64_t k, double TOL, int64
 
 
 /* computes the approximate low rank SVD of rank k of matrix M  */
+/* modified by zkk995@gmail.com  2017-09-22 */
 void low_rank_svd_rand_decomp_fixed_rank(mat *M, int64_t k, int64_t p, int64_t vnum, int64_t q, int64_t s, int64_t *frank, mat **U, mat **S, mat **V){
     int64_t i,j,m,n,r,l;
     mat *RN, *Y, *Z, *Q, *Yorth, *Zorth;
@@ -86,10 +84,10 @@ void low_rank_svd_rand_decomp_fixed_rank(mat *M, int64_t k, int64_t p, int64_t v
     r = min(m,n);
 
     // setup mats
-    l = k + p;
-    *U = matrix_new(m,l); mattrix_fill_zero(*U);
-    *S = matrix_new(l,l); mattrix_fill_zero(*S);
-    *V = matrix_new(n,l); mattrix_fill_zero(*V);
+    l = min(r,k + p); //避免超出
+    *U = matrix_new(m,l); 
+    *S = matrix_new(l,l); 
+    *V = matrix_new(n,l); 
 
     // build random matrix
     RN = matrix_new(n, l);
@@ -206,7 +204,7 @@ void low_rank_svd_rand_decomp_fixed_rank(mat *M, int64_t k, int64_t p, int64_t v
         printf("form S..\n");
         vec *singvals = vector_new(l);
         for(i=0; i<l; i++){
-            vector_set_element(singvals,i,sqrt(fabs(vector_get_element(evals,i))));
+            vector_set_element(singvals,i,sqrt(max(0.0,vector_get_element(evals,i))));
         }
         initialize_diagonal_matrix(*S, singvals);
         
@@ -217,7 +215,7 @@ void low_rank_svd_rand_decomp_fixed_rank(mat *M, int64_t k, int64_t p, int64_t v
         // compute nxk V 
         // V = B^T Uhat * Sigma^{-1}
         printf("form V..\n");
-        mat *Sinv = matrix_new(l,l);  mattrix_fill_zero(Sinv);
+        mat *Sinv = matrix_new(l,l);
         mat *UhatSinv = matrix_new(l,l);
         invert_diagonal_matrix(Sinv,*S);
         matrix_matrix_mult(Uhat,Sinv,UhatSinv);
