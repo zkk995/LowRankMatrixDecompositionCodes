@@ -463,7 +463,7 @@ double gaussrand()
 {
     static double V1, V2, S;
     static int phase = 0;
-    double X; eps=0.001;
+    double X, eps=0.001;
 
     if(phase == 0) {
         do {
