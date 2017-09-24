@@ -81,7 +81,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     }
 
     // create U,S,V in Matlab
-    printf("creating U: %d by %d..\n", U->nrows, U->ncols);
+    //printf("creating U: %d by %d..\n", U->nrows, U->ncols);
     dims[0] = U->nrows; dims[1] = U->ncols;
     plhs[0] = mxCreateNumericArray(2, dims, mxDOUBLE_CLASS, mxREAL);
     
@@ -90,7 +90,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     memcpy(ptr,U->d,bytes_to_copy);
     
 
-    printf("creating S: %d by %d..\n", S->nrows, S->ncols);
+    //printf("creating S: %d by %d..\n", S->nrows, S->ncols);
     dims[0] = S->nrows; dims[1] = S->ncols;
     plhs[1] = mxCreateNumericArray(2, dims, mxDOUBLE_CLASS, mxREAL);
     
@@ -98,7 +98,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
     bytes_to_copy = dims[0]*dims[1]*sizeof(double);
     memcpy(ptr,S->d,bytes_to_copy);
 
-    printf("creating V: %d by %d..\n", V->nrows, V->ncols);
+    //printf("creating V: %d by %d..\n", V->nrows, V->ncols);
     dims[0] = V->nrows; dims[1] = V->ncols;
     plhs[2] = mxCreateNumericArray(2, dims, mxDOUBLE_CLASS, mxREAL);
     
